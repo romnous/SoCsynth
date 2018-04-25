@@ -50,9 +50,14 @@ void sevenSegmentHandler(int);
 
 volatile void *LW_virtual;
 
-int getFreq(int button) {
-    const int multiplier = 10;
-    return button * multiplier;
+double getFreq(int n) {
+    //middle C is n = -9 or 261.63Hz
+    n -= 28;
+    if (n < 28) {
+        double frequancy = (440*pow(2, (double)n/(double)12));
+        return frequancy;
+    } else
+        return 0;
 }
 
 
@@ -71,24 +76,26 @@ void dacInit() {
 }
 
 volatile int t = 1;
-int audio;
+double audio;
 
 static void
 handler(int sig, siginfo_t *si, void *uc) {
     int x;
-    int frequancy;
+    double frequancy;
 
     audio = 0;
     if (buttonsPressed > 0) {
         for (x = 0; x < 6; x++) {
-            frequancy = getFreq(buttonCodes[x]);
-            int something = (2 * PI * frequancy * t) / sampleRate;
-            audio += -amplitude * sin(something);
+            if(buttonCodes[x] > 0){
+                frequancy = getFreq(buttonCodes[x]);
+                double something = (2 * PI * frequancy * t) / sampleRate;
+                audio += -amplitude * sin(something);
+            }
         }
         audio = audio / buttonsPressed;
     }
     ++t;
-    printf("%d\n", audio);
+    printf("%f\n", audio);
 }
 
 void timerInit() {
@@ -237,6 +244,10 @@ void main() {
                 }
             }
             fflush(stdout);
+            if(buttonsPressed>0)
+                sevenSegmentHandler(getFreq(buttonCodes[0]));
+            else
+                sevenSegmentHandler(0);
         }
     }
     *LEDR_ptr = 0;
