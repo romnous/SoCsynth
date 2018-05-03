@@ -22,6 +22,8 @@ typedef int bool;
 #define true 1
 #define false 0
 
+//#define debug
+
 #define CLOCKID CLOCK_REALTIME
 #define SIG SIGRTMIN
 
@@ -37,7 +39,7 @@ typedef unsigned int u32;
 
 
 
-volatile int kamansh = 0;
+volatile int kamansh = 1;
 volatile int buttonsPressed = 0;
 volatile int buttonCodes[6] = {0};
 
@@ -54,7 +56,7 @@ double getFreq(int n) {
     //middle C is n = -9 or 261.63Hz
     n -= 28;
     if (n < 28) {
-        double frequancy = (440*pow(2, (double)n/(double)12));
+        double frequancy = (440*pow(2, n/12.0));
         return frequancy;
     } else
         return 0;
@@ -67,6 +69,12 @@ volatile int * SSEG2_ptr;
 void sevenSegmentInit() {
     SSEG1_ptr = (unsigned int *) (LW_virtual + HEX3_HEX0_BASE);
     SSEG2_ptr = (unsigned int *) (LW_virtual + HEX5_HEX4_BASE);
+}
+
+volatile int * FPGAOUT_ptr;
+
+void fpgaOutInit() {
+    FPGAOUT_ptr = (unsigned int *) (LW_virtual + FPGA_ONCHIP_BASE);
 }
 
 volatile int * DAC_ptr;
@@ -95,7 +103,11 @@ handler(int sig, siginfo_t *si, void *uc) {
         audio = audio / buttonsPressed;
     }
     ++t;
+
+#ifdef debug
     printf("%f\n", audio);
+#endif
+    *FPGAOUT_ptr = audio;
 }
 
 void timerInit() {
@@ -117,7 +129,9 @@ void timerInit() {
         errExit("sigaction");
 
     // Block timer signal temporarily 
+#ifdef debug
     printf("Blocking signal %d\n", SIG);
+#endif
     sigemptyset(&mask);
     sigaddset(&mask, SIG);
     if (sigprocmask(SIG_SETMASK, &mask, NULL) == -1)
@@ -189,8 +203,9 @@ void main() {
     LEDR_ptr = (unsigned int *) (LW_virtual + LEDR_BASE);
     *LEDR_ptr = 0;
 
-    dacInit();
-
+    fpgaOutInit();
+    *FPGAOUT_ptr = 0;
+            
     sevenSegmentInit();
     sevenSegmentHandler(0);
 
