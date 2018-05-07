@@ -48,9 +48,14 @@ int unmap_physical(void *, unsigned int);
 void * map_physical(int, unsigned int, unsigned int);
 void sevenSegmentHandler(int);
 
-
-
+//pointers to DE1 fpga devices
+volatile int * FPGA_OUT;
+volatile int * DAC_ptr;
+volatile int * LEDR_ptr;
 volatile void *LW_virtual;
+volatile int * SSEG1_ptr;
+volatile int * SSEG2_ptr;
+
 
 double getFreq(int n) {
     //middle C is n = -9 or 261.63Hz
@@ -62,22 +67,12 @@ double getFreq(int n) {
         return 0;
 }
 
-
-volatile int * SSEG1_ptr;
-volatile int * SSEG2_ptr;
-
 void sevenSegmentInit() {
     SSEG1_ptr = (unsigned int *) (LW_virtual + HEX3_HEX0_BASE);
     SSEG2_ptr = (unsigned int *) (LW_virtual + HEX5_HEX4_BASE);
 }
 
-volatile int * FPGAOUT_ptr;
 
-void fpgaOutInit() {
-    FPGAOUT_ptr = (unsigned int *) (LW_virtual + FPGA_ONCHIP_BASE);
-}
-
-volatile int * DAC_ptr;
 
 void dacInit() {
     DAC_ptr = (unsigned int *) (LW_virtual + AUDIO_BASE);
@@ -107,7 +102,8 @@ handler(int sig, siginfo_t *si, void *uc) {
 #ifdef debug
     printf("%f\n", audio);
 #endif
-    *FPGAOUT_ptr = audio;
+    *FPGA_OUT = audio;
+//    *LEDR_ptr = audio;
 }
 
 void timerInit() {
@@ -127,11 +123,8 @@ void timerInit() {
     sigemptyset(&sa.sa_mask);
     if (sigaction(SIG, &sa, NULL) == -1)
         errExit("sigaction");
-
     // Block timer signal temporarily 
-#ifdef debug
     printf("Blocking signal %d\n", SIG);
-#endif
     sigemptyset(&mask);
     sigaddset(&mask, SIG);
     if (sigprocmask(SIG_SETMASK, &mask, NULL) == -1)
@@ -169,9 +162,9 @@ void main() {
     bool ctrl = false;
 
     unsigned int key = -1;
+    
 
-    //virtual pointer to DE1
-    volatile int * LEDR_ptr;
+    
 
     int input_fd;
     int output_fd = -1;
@@ -179,7 +172,7 @@ void main() {
     //physical addresses for light-weight bridge
 
 
-    timerInit();
+    
 
     input_fd = open(keyboard, (O_RDONLY));
     if (input_fd < 0) {
@@ -198,17 +191,24 @@ void main() {
         fflush(stdout);
         exit(0);
     }
+    if ((FPGA_OUT = map_physical(output_fd, FPGA_ONCHIP_BASE, FPGA_ONCHIP_SPAN)) == NULL){
+        printf("cannot establish FPGA ONCHIP BASE");
+        fflush(stdout);
+        exit(0);
+    }
 
     //Set virtual address pointer to I/O port
     LEDR_ptr = (unsigned int *) (LW_virtual + LEDR_BASE);
     *LEDR_ptr = 0;
 
-    fpgaOutInit();
-    *FPGAOUT_ptr = 0;
+//    FPGAOUT_ptr = (unsigned int *) (FPGA_ONCHIP_BASE);
+    *FPGA_OUT = 0;
             
     sevenSegmentInit();
     sevenSegmentHandler(0);
-
+    
+    timerInit();
+    
     int pressIgnore = 0;
 
     while (!stopSignal) {
