@@ -1,11 +1,6 @@
 	soc_system u0 (
-		.avalon_bridge_external_interface_address     (<connected-to-avalon_bridge_external_interface_address>),     //    avalon_bridge_external_interface.address
-		.avalon_bridge_external_interface_byte_enable (<connected-to-avalon_bridge_external_interface_byte_enable>), //                                    .byte_enable
-		.avalon_bridge_external_interface_read        (<connected-to-avalon_bridge_external_interface_read>),        //                                    .read
-		.avalon_bridge_external_interface_write       (<connected-to-avalon_bridge_external_interface_write>),       //                                    .write
-		.avalon_bridge_external_interface_write_data  (<connected-to-avalon_bridge_external_interface_write_data>),  //                                    .write_data
-		.avalon_bridge_external_interface_acknowledge (<connected-to-avalon_bridge_external_interface_acknowledge>), //                                    .acknowledge
-		.avalon_bridge_external_interface_read_data   (<connected-to-avalon_bridge_external_interface_read_data>),   //                                    .read_data
+		.audio_ctrl_external_connection_export        (<connected-to-audio_ctrl_external_connection_export>),        //      audio_ctrl_external_connection.export
+		.audio_input_external_connection_export       (<connected-to-audio_input_external_connection_export>),       //     audio_input_external_connection.export
 		.audio_subsystem_audio_ADCDAT                 (<connected-to-audio_subsystem_audio_ADCDAT>),                 //               audio_subsystem_audio.ADCDAT
 		.audio_subsystem_audio_ADCLRCK                (<connected-to-audio_subsystem_audio_ADCLRCK>),                //                                    .ADCLRCK
 		.audio_subsystem_audio_BCLK                   (<connected-to-audio_subsystem_audio_BCLK>),                   //                                    .BCLK
@@ -16,6 +11,13 @@
 		.audio_subsystem_audio_pll_ref_reset_reset    (<connected-to-audio_subsystem_audio_pll_ref_reset_reset>),    // audio_subsystem_audio_pll_ref_reset.reset
 		.av_config_external_interface_SDAT            (<connected-to-av_config_external_interface_SDAT>),            //        av_config_external_interface.SDAT
 		.av_config_external_interface_SCLK            (<connected-to-av_config_external_interface_SCLK>),            //                                    .SCLK
+		.avalon_bridge_external_interface_address     (<connected-to-avalon_bridge_external_interface_address>),     //    avalon_bridge_external_interface.address
+		.avalon_bridge_external_interface_byte_enable (<connected-to-avalon_bridge_external_interface_byte_enable>), //                                    .byte_enable
+		.avalon_bridge_external_interface_read        (<connected-to-avalon_bridge_external_interface_read>),        //                                    .read
+		.avalon_bridge_external_interface_write       (<connected-to-avalon_bridge_external_interface_write>),       //                                    .write
+		.avalon_bridge_external_interface_write_data  (<connected-to-avalon_bridge_external_interface_write_data>),  //                                    .write_data
+		.avalon_bridge_external_interface_acknowledge (<connected-to-avalon_bridge_external_interface_acknowledge>), //                                    .acknowledge
+		.avalon_bridge_external_interface_read_data   (<connected-to-avalon_bridge_external_interface_read_data>),   //                                    .read_data
 		.hex3_hex0_external_connection_export         (<connected-to-hex3_hex0_external_connection_export>),         //       hex3_hex0_external_connection.export
 		.hex5_hex4_external_connection_export         (<connected-to-hex5_hex4_external_connection_export>),         //       hex5_hex4_external_connection.export
 		.hps_io_hps_io_emac1_inst_TX_CLK              (<connected-to-hps_io_hps_io_emac1_inst_TX_CLK>),              //                              hps_io.hps_io_emac1_inst_TX_CLK
@@ -87,8 +89,6 @@
 		.sw_1_external_connection_export              (<connected-to-sw_1_external_connection_export>),              //            sw_1_external_connection.export
 		.system_pll_ref_clk_clk                       (<connected-to-system_pll_ref_clk_clk>),                       //                  system_pll_ref_clk.clk
 		.system_pll_ref_reset_reset                   (<connected-to-system_pll_ref_reset_reset>),                   //                system_pll_ref_reset.reset
-		.system_pll_sdram_clk_clk                     (<connected-to-system_pll_sdram_clk_clk>),                     //                system_pll_sdram_clk.clk
-		.audio_input_external_connection_export       (<connected-to-audio_input_external_connection_export>),       //     audio_input_external_connection.export
-		.audio_ctrl_external_connection_export        (<connected-to-audio_ctrl_external_connection_export>)         //      audio_ctrl_external_connection.export
+		.system_pll_sdram_clk_clk                     (<connected-to-system_pll_sdram_clk_clk>)                      //                system_pll_sdram_clk.clk
 	);
 

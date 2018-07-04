@@ -1,12 +1,7 @@
 
 module soc_system (
-	avalon_bridge_external_interface_address,
-	avalon_bridge_external_interface_byte_enable,
-	avalon_bridge_external_interface_read,
-	avalon_bridge_external_interface_write,
-	avalon_bridge_external_interface_write_data,
-	avalon_bridge_external_interface_acknowledge,
-	avalon_bridge_external_interface_read_data,
+	audio_ctrl_external_connection_export,
+	audio_input_external_connection_export,
 	audio_subsystem_audio_ADCDAT,
 	audio_subsystem_audio_ADCLRCK,
 	audio_subsystem_audio_BCLK,
@@ -17,6 +12,13 @@ module soc_system (
 	audio_subsystem_audio_pll_ref_reset_reset,
 	av_config_external_interface_SDAT,
 	av_config_external_interface_SCLK,
+	avalon_bridge_external_interface_address,
+	avalon_bridge_external_interface_byte_enable,
+	avalon_bridge_external_interface_read,
+	avalon_bridge_external_interface_write,
+	avalon_bridge_external_interface_write_data,
+	avalon_bridge_external_interface_acknowledge,
+	avalon_bridge_external_interface_read_data,
 	hex3_hex0_external_connection_export,
 	hex5_hex4_external_connection_export,
 	hps_io_hps_io_emac1_inst_TX_CLK,
@@ -88,17 +90,10 @@ module soc_system (
 	sw_1_external_connection_export,
 	system_pll_ref_clk_clk,
 	system_pll_ref_reset_reset,
-	system_pll_sdram_clk_clk,
-	audio_input_external_connection_export,
-	audio_ctrl_external_connection_export);	
+	system_pll_sdram_clk_clk);	
 
-	input	[15:0]	avalon_bridge_external_interface_address;
-	input	[3:0]	avalon_bridge_external_interface_byte_enable;
-	input		avalon_bridge_external_interface_read;
-	input		avalon_bridge_external_interface_write;
-	input	[31:0]	avalon_bridge_external_interface_write_data;
-	output		avalon_bridge_external_interface_acknowledge;
-	output	[31:0]	avalon_bridge_external_interface_read_data;
+	input	[15:0]	audio_ctrl_external_connection_export;
+	input	[31:0]	audio_input_external_connection_export;
 	input		audio_subsystem_audio_ADCDAT;
 	input		audio_subsystem_audio_ADCLRCK;
 	input		audio_subsystem_audio_BCLK;
@@ -109,6 +104,13 @@ module soc_system (
 	input		audio_subsystem_audio_pll_ref_reset_reset;
 	inout		av_config_external_interface_SDAT;
 	output		av_config_external_interface_SCLK;
+	input	[15:0]	avalon_bridge_external_interface_address;
+	input	[3:0]	avalon_bridge_external_interface_byte_enable;
+	input		avalon_bridge_external_interface_read;
+	input		avalon_bridge_external_interface_write;
+	input	[31:0]	avalon_bridge_external_interface_write_data;
+	output		avalon_bridge_external_interface_acknowledge;
+	output	[31:0]	avalon_bridge_external_interface_read_data;
 	output	[31:0]	hex3_hex0_external_connection_export;
 	output	[15:0]	hex5_hex4_external_connection_export;
 	output		hps_io_hps_io_emac1_inst_TX_CLK;
@@ -181,6 +183,4 @@ module soc_system (
 	input		system_pll_ref_clk_clk;
 	input		system_pll_ref_reset_reset;
 	output		system_pll_sdram_clk_clk;
-	input	[31:0]	audio_input_external_connection_export;
-	input	[15:0]	audio_ctrl_external_connection_export;
 endmodule

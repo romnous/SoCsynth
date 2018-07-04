@@ -290,7 +290,7 @@ architecture main of adsrhps is
 		
 process(clock_50)
 begin
-	ledr <= audio_input(9 downto 0);
+	--ledr <= audio_input(9 downto 0);
 	HEX0 <= hex3_hex0_control(6 downto 0);
 	HEX1 <= hex3_hex0_control(14 downto 8);
 	HEX2 <= hex3_hex0_control(22 downto 16);

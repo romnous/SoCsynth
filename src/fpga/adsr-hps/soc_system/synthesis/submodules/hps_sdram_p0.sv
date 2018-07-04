@@ -190,9 +190,9 @@ parameter READ_VALID_FIFO_SIZE             = 16;
 // Data resynchronization FIFO
 parameter READ_FIFO_SIZE                   = 8;
 
-parameter MR1_ODS								= 0;
-parameter MR1_RTT								= 3;
-parameter MR2_RTT_WR							= 0;
+parameter MR1_ODS								= 1;
+parameter MR1_RTT								= 1;
+parameter MR2_RTT_WR							= 1;
 
 
 // The DLL offset control width

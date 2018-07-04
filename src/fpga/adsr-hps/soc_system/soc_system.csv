@@ -1,12 +1,12 @@
-# system info soc_system on 2018.07.02.20:59:50
+# system info soc_system on 2018.07.03.19:42:35
 system_info:
 name,value
 DEVICE,5CSEMA5F31C6
 DEVICE_FAMILY,Cyclone V
-GENERATION_ID,1530557882
+GENERATION_ID,1530639561
 #
 #
-# Files generated for soc_system on 2018.07.02.20:59:50
+# Files generated for soc_system on 2018.07.03.19:42:35
 files:
 filepath,kind,attributes,module,is_top
 simulation/soc_system.vhd,VHDL,,soc_system,true

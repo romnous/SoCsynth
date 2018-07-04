@@ -8,8 +8,7 @@
    <export preferredWidth="248" />
   </columns>
  </systemtable>
- <library
-   expandedCategories="Library/Interface Protocols,Library/Interface Protocols/PCI Express,Library/Interface Protocols/PCI Express/QSYS Example Designs,Library/Processors and Peripherals/Peripherals,Library/Processors and Peripherals,Library,Project" />
+ <library expandedCategories="Project,Library" />
  <window width="1936" height="1096" x="1358" y="-30" />
  <generation synthesis="VHDL" simulation="VHDL" />
  <hdlexample language="VHDL" />
